@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Brukeradministrasjon</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+        <script src="controller.js"></script>
+
+        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+    </head>
+
+    <body>
+
+        <div ng-app="myApp" ng-controller="UsersList">
+            <div ng-cloak id="list" ng-show="view == 'list'">
+                <h1>Brukere</h1>
+                <input type="text" class="smallInput" ng-model="searchText" placeholder="S&oslash;k" style="display:inline;">
+                <span class="icon rounded color1 verysmall fa fa-plus pointer" ng-click="showEditForm('new');"></span>
+
+                <table>
+                    <tr>
+                        <th>Navn:</th>
+                        <th>E-post:</th>
+                        <th>Verktøy:</th>
+                    </tr>
+
+                    <tr ng-repeat="user in usersArr | filter: searchText">
+                        <td>{{user.lastname + ', ' + user.firstname}}</td>
+                        <td>{{user.email}}</td>
+                        <td>
+                            <span class="icon verysmall rounded color1 fa fa-edit pointer" title="Endre" ng-click="showEditForm(user);"></span>
+                            <span class="icon verysmall rounded color-error fa fa-close pointer" title="Slett" ng-click="delete(user);"></span>
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+
+            <div ng-cloak id="lit" ng-show="view == 'edit'">
+                <h1>Endre</h1>
+                <form name="editUser">
+                    <p>
+                        <label>Fornavn:</label>
+                        <input type="text" name="firstname" ng-model="firstname" required>
+                        <span ng-show="!editUser.firstname.$valid" class="error">Dette feltet er obligatorisk.</span>
+                    </p>
+
+                    <p>
+                        <label>Etternavn:</label>
+                        <input type="text" name="lastname" ng-model="lastname" required>
+                        <span ng-show="!editUser.lastname.$valid" class="error">Dette feltet er obligatorisk.</span>
+                    </p>
+
+                    <p>
+                        <label>E-post:</label>
+                        <input type="email" name="email" ng-model="email" required>
+                        <span ng-show="!editUser.email.$valid" class="error">Dette feltet må inneholde en gyldig e-postadresse.</span>
+                    </p>
+
+                    <p ng-show="selectedUser.userID != 'new'">
+                        <input type="checkbox" id="changePwdCB" ng-model="showChangePwd">
+                        <label for="changePwdCB">Bytt passord</label>
+                    </p>
+                </form>
+
+                <form name="passwords">
+                    <div ng-show="showChangePwd">
+                        <p>
+                            <label>Nytt passord:</label>
+                            <input type="text" name="password1" ng-model="password1" required>
+                            <span ng-show="!passwords.password1.$valid" class="error">Dette feltet er obligatorisk.</span>
+                        </p>
+
+                        <p>
+                            <label>Gjenta passord:</label>
+                            <input type="text" name="password2" ng-model="password2">
+                        </p>
+
+                        <p ng-show="password1 != password2" class="error">
+                            De to passordene må være like.
+
+                        </p>
+                    </div>
+                </form
+
+
+
+
+
+                    <p>
+                        <button ng-disabled="editUser.$invalid || (showChangePwd && (password1 != password2 || !password1))" ng-click="save();">Lagre</button>
+                        <button ng-click="view = 'list'">Avbryt</button>
+                    </p>
+
+            </div>
+
+        </div>
+    </body>              
+
+</html>
+
+
