@@ -1,6 +1,6 @@
 # A form for adding, editing and removing users.
 
-This code was written as part of a test I was given by a company at which I had applied for a job. I was given roughly 2 hours, but spent something like 2 hour 45 minutes.
+This code was written as part of a test I was given by a company at which I had applied for a job. I spent roughly two hours and 45 minutes coding this program.
 
 The task was to make a program for registering users into a database.
 
